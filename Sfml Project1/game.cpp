@@ -4,7 +4,7 @@
 #include "wall.h"
 #include "enemy.h"
 #include "projectile.h"
-
+#include "particle.h"
 using namespace std;
 
 void screenRender(sf::RenderWindow &window, Player&player, Wall &wall, Enemy &enemy1);
@@ -15,7 +15,7 @@ int main() {
 	window.setFramerateLimit(240);
 	window.setMouseCursorVisible(false);
 
-	
+	ParticleSystem particles(1000);
 
 	Wall wall1;
 	Enemy enemy1;
@@ -29,6 +29,7 @@ int main() {
 	backgroundSP.setTexture(backgroud);
 
 	sf::Clock clock;
+	sf::Clock ptclock;
 	sf::Time time, timeTest;
 
 	bool test = false;
@@ -108,10 +109,15 @@ int main() {
 		player.update(window, wall1);
 		player.movement();
 
+		sf::Vector2i mouse = sf::Mouse::getPosition(window);
+		particles.setEmitter(window.mapPixelToCoords(mouse));
 
+		// update it
+		sf::Time elapsed = ptclock.restart();
+		particles.update(elapsed);
 
 		window.clear();
-		window.draw(backgroundSP);
+	//	window.draw(backgroundSP);
 		counter = 0;
 		for (iter = projectileArray.begin(); iter != projectileArray.end(); iter++)
 		{
@@ -121,7 +127,7 @@ int main() {
 			counter++;
 		}
 		screenRender(window,player,wall1,enemy1);
-
+		window.draw(particles);
 		window.display();
 
 	}

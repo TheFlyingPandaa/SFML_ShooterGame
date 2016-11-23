@@ -18,7 +18,6 @@ public:
 	void update(sf::RenderWindow &window, Wall & wall);
 	float rotation = 0;
 private:
-	bool lenghtt = false;
 	
 };
 

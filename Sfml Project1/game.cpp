@@ -15,7 +15,7 @@ int main() {
 	window.setFramerateLimit(240);
 	window.setMouseCursorVisible(false);
 
-	ParticleSystem particles(1000);
+	
 
 	Wall wall1;
 	Enemy enemy1;
@@ -38,6 +38,7 @@ int main() {
 	vector<Projectile> projectileArray;
 
 	Projectile projectile1;
+	ParticleSystem particles(1000);
 
 	while (window.isOpen()) { // When open, DO following
 
@@ -114,7 +115,7 @@ int main() {
 
 		// update it
 		sf::Time elapsed = ptclock.restart();
-		particles.update(elapsed);
+		particles.update(elapsed,player);
 
 		window.clear();
 	//	window.draw(backgroundSP);

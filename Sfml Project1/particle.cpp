@@ -14,7 +14,7 @@ void ParticleSystem::setEmitter(sf::Vector2f position)
 	m_emitter = position;
 }
 
-void ParticleSystem::update(sf::Time elapsed)
+void ParticleSystem::update(sf::Time elapsed, Player &player)
 {
 	for (std::size_t i = 0; i < this->m_particles.size(); ++i)
 	{
@@ -26,9 +26,12 @@ void ParticleSystem::update(sf::Time elapsed)
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::L))
 		{
 			if (p.lifetime <= sf::Time::Zero)
-				resetParticle(i);
+				resetParticle(i, player);
 		}
-
+			if (p.lifetime <= sf::Time::Zero)
+			{
+				m_vertices[i].color = sf::Color::Transparent;
+			}
 
 		// update the position of the corresponding vertex
 		m_vertices[i].position += p.velocity * elapsed.asSeconds();
@@ -36,7 +39,11 @@ void ParticleSystem::update(sf::Time elapsed)
 		// update the alpha (transparency) of the particle according to its lifetime
 		float ratio = p.lifetime.asSeconds() / m_lifetime.asSeconds();
 		m_vertices[i].color.a = static_cast<sf::Uint8>(ratio * 255);
-		m_vertices[i].color = sf::Color::Red;
+		if (p.lifetime >= sf::Time::Zero)
+		{
+			m_vertices[i].color = sf::Color::Red;
+		}
+		
 	}
 }
 
@@ -44,15 +51,15 @@ void ParticleSystem::update(sf::Time elapsed)
 	//virtual void ParticleSystem::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	
 
-	void ParticleSystem::resetParticle(std::size_t index)
+void ParticleSystem::resetParticle(std::size_t index, Player &player)
 	{
 		// give a random velocity and lifetime to the particle
-		float angle = (std::rand() % 360) * 3.14f / 180.f;
-		//float speed = (std::rand() % 50) + 50.f;
-		//m_particles[index].velocity = sf::Vector2f(std::cos(angle) * speed, std::sin(angle) * speed);
-		m_particles[index].velocity = sf::Vector2f(std::cos(angle), std::sin(angle));
-		m_particles[index].lifetime = sf::milliseconds((std::rand() % 2000) + 1000);
-
+		float angle = (std::rand() % 30 + player.rotation) * 3.14f / 180.f;
+		float speed = (std::rand() % 20) + 20.f;
+		m_particles[index].velocity = sf::Vector2f(std::cos(angle+200) * speed, std::sin(angle+200) * speed);
+		//m_particles[index].velocity = sf::Vector2f(std::cos(angle), std::sin(angle));
+		m_particles[index].lifetime = sf::milliseconds((std::rand() % 2000) + 1110);
+		
 		// reset the position of the corresponding vertex
 		m_vertices[index].position = m_emitter;
 	}

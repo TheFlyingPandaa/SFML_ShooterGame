@@ -17,6 +17,7 @@ private:
 		states.transform *= getTransform();
 
 		// our particles don't use a texture
+		
 		states.texture = NULL;
 
 		// draw the vertex array

@@ -1,5 +1,5 @@
 #include "enemy.h"
-#include <iostream>
+
 Enemy::Enemy()
 {
 	circ.setFillColor(sf::Color::Red);

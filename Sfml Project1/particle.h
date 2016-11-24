@@ -1,11 +1,11 @@
 #ifndef PARTICLE_H
 #define PARTICLE_H
 
-
-
-
 #include <SFML\Graphics.hpp>
 #include "player.h"
+
+//Yes this particle effect is originaly from the SFML documentation page
+//So kinda copied? But it will be heavily edited. Will be removed if this counts as "plagiat"
 
 class ParticleSystem : public sf::Drawable, public sf::Transformable
 {
@@ -16,6 +16,8 @@ public:
 	void setEmitter(sf::Vector2f position);
 
 	void update(sf::Time elapsed, Player &player);
+
+	void execute(Player&player);
 private:
 
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const {
@@ -31,7 +33,7 @@ private:
 	}
 
 private:
-
+	float angle = 0;
 	struct Particle
 	{
 		sf::Vector2f velocity;

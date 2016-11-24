@@ -91,6 +91,8 @@ int main() {
 			if (projectileArray[counter].rect.getGlobalBounds().intersects(enemy1.circ.getGlobalBounds()))
 			{
 				enemy1.enemyHit(projectileArray[counter].headShoot);
+				particles.setEmitter(enemy1.circ.getPosition());
+				particles.execute(player);
 				projectileArray[counter].destory = true;
 			}
 			counter++;
@@ -106,19 +108,21 @@ int main() {
 			counter++;
 		}
 
+		
+
 		enemy1.update();
 		player.update(window, wall1);
 		player.movement();
 
-		sf::Vector2i mouse = sf::Mouse::getPosition(window);
-		particles.setEmitter(window.mapPixelToCoords(mouse));
+		//sf::Vector2i mouse = sf::Mouse::getPosition(window);
+		//particles.setEmitter(window.mapPixelToCoords(mouse));
 
 		// update it
 		sf::Time elapsed = ptclock.restart();
 		particles.update(elapsed,player);
 
 		window.clear();
-	//	window.draw(backgroundSP);
+		window.draw(backgroundSP);
 		counter = 0;
 		for (iter = projectileArray.begin(); iter != projectileArray.end(); iter++)
 		{
@@ -150,9 +154,6 @@ void screenRender(sf::RenderWindow &window, Player&player, Wall &wall1, Enemy &e
 sf::Vector2f curPos = player.pointer.getPosition();
 sf::Vector2i position = sf::Mouse::getPosition(window);
 
-// now we have both the sprite position and the cursor
-// position lets do the calculation so our sprite will
-// face the position of the mouse
 const float PI = 3.14159265;
 
 float dx = curPos.x - position.x;

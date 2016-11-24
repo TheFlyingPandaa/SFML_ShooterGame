@@ -66,21 +66,25 @@ int main() {
 
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 		{
-			if (test == false)
+			if (player.getAmmo() < player.getAmmoCap())
 			{
-				projectile1.rect.setPosition(player.circ.getPosition());
-				projectile1.direction = player.rotation;
-				if (player.curser.getGlobalBounds().intersects(enemy1.circ.getGlobalBounds()))
+				if (test == false)
 				{
-					projectile1.headShoot = true;
+					projectile1.rect.setPosition(player.circ.getPosition());
+					projectile1.direction = player.rotation;
+					if (player.curser.getGlobalBounds().intersects(enemy1.circ.getGlobalBounds()))
+					{
+						projectile1.headShoot = true;
+					}
+					projectileArray.push_back(projectile1);
+					test = true;
+					timeTest = time;
+					player.ammoTick();
 				}
-				projectileArray.push_back(projectile1);
-				test = true;
-				timeTest = time;
 			}
 			
-			
 		}
+		cout << player.getAmmo() << endl;
 		if (time >= (timeTest + sf::seconds(0.2)))
 		{
 			test = false;

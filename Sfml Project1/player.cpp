@@ -22,11 +22,37 @@ Player::Player()
 	//curser.setPosition(sf::Vector2f(300, 300));
 }
 
+int Player::getAmmoCap() const
+{
+	return this->ammoCap;
+}
+
+int Player::getAmmo() const
+{
+	return this->ammo;
+}
+
+void Player::reload() 
+{
+	this->ammo = 0;
+}
+
+void Player::ammoTick()
+{
+	this->ammo++;
+}
+
+
 Player::~Player()
 {
 }
 
 void Player::movement() {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
+	{
+		reload();
+	}
+
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 	{
 		circ.move(sf::Vector2f(-movementSpeed, 0));

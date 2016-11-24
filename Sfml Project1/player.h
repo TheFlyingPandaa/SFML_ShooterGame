@@ -17,8 +17,15 @@ public:
 	void movement();
 	void update(sf::RenderWindow &window, Wall & wall);
 	float rotation = 0;
+
+	int getAmmoCap() const;
+	int getAmmo() const;
+	void ammoTick();
 private:
-	
+	int ammoCap = 30;
+	int ammo = 0;
+
+	void reload();
 };
 
 

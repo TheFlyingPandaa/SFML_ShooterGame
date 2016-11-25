@@ -27,7 +27,7 @@ int main() {
 	}
 	sf::Sprite backgroundSP;
 	backgroundSP.setTexture(backgroud);
-
+	
 	sf::Clock clock;
 	sf::Clock ptclock;
 	sf::Time time, timeTest;
@@ -84,7 +84,7 @@ int main() {
 			}
 			
 		}
-		cout << player.getAmmo() << endl;
+		//cout << player.getAmmo() << endl;
 		if (time >= (timeTest + sf::seconds(0.2)))
 		{
 			test = false;
@@ -114,7 +114,7 @@ int main() {
 
 		
 
-		enemy1.update();
+		enemy1.update(player.circ.getPosition());
 		player.update(window, wall1);
 		player.movement();
 
@@ -135,6 +135,16 @@ int main() {
 
 			counter++;
 		}
+		counter = 0;
+		/*vector<Projectile> testt = enemy1.getProjectileArray();
+		for (iter = enemy1.getProjectileArray().begin(); iter != enemy1.getProjectileArray().end(); iter++)
+		{
+			testt[counter].update();
+			window.draw(enemy1.getProjectileArray()[counter].rect);
+			
+			counter++;
+		}
+		enemy1.setProjectileArray(testt);*/
 		screenRender(window,player,wall1,enemy1);
 		window.draw(particles);
 		window.display();

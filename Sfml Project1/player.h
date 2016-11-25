@@ -10,13 +10,14 @@ public:
 	sf::RectangleShape pointer;
 	sf::RectangleShape curser;
 
-	int direction = 0;
+	
 	void rotateUpdate(sf::RenderWindow &window);
 	Player();
 	~Player();
 	void movement();
 	void update(sf::RenderWindow &window, Wall & wall);
 	float rotation = 0;
+	int direction = 0;
 
 	int getAmmoCap() const;
 	int getAmmo() const;

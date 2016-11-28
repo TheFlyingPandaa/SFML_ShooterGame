@@ -20,16 +20,18 @@ void Enemy::update(const sf::Vector2f& PlayerPlace) {
 	distanceToPlayer = sqrt(dx + dy);
 	//std::cout << this->rotation << std::endl;
 	std::cout << this->getProjectileArray().size() << std::endl;
-	if (distanceToPlayer < 100)
-	{
-		//this->speed = 1;
-		enemyShoot(PlayerPlace);
-	}
-	else
-	{
-		this->speed = 0.2;
-	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::U)) {
 
+		if (distanceToPlayer < 100)
+		{
+			//this->speed = 1;
+			//enemyShoot(PlayerPlace);
+		}
+		else
+		{
+			this->speed = 0.2;
+		}
+	}
 	if (this->hitPoints <= 0)
 	{
 		circ.setFillColor(sf::Color::Transparent);

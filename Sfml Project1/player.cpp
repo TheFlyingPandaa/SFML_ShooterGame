@@ -73,12 +73,25 @@ void Player::movement() {
 		circ.move(sf::Vector2f(0, movementSpeed));
 		direction = 4;
 	}
+
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 	{
 		direction = 5;
 	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+	{
+		direction = 6;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+	{
+		direction = 7;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+	{
+		direction = 8;
+	}
 }
-void Player::update(sf::RenderWindow &window, Wall & wall) {
+void Player::update(sf::RenderWindow &window, std::vector<Wall>&mapArray, int wallAmount) {
 	float dx = pow(abs(sf::Mouse::getPosition(window).x - circ.getPosition().x), 2);
 	float dy = pow(abs(sf::Mouse::getPosition(window).y - circ.getPosition().y), 2);
 	
@@ -89,31 +102,43 @@ void Player::update(sf::RenderWindow &window, Wall & wall) {
 	pointer.setPosition(circ.getPosition());
 	
 	rotateUpdate(window);
-
-	if (circ.getGlobalBounds().intersects(wall.rect.getGlobalBounds()))
-	{
-		if (direction == 1)
+	for (size_t i = 0; i < wallAmount; i++) {
+		if (circ.getGlobalBounds().intersects(mapArray[i].rect.getGlobalBounds()))
 		{
-			circ.move(sf::Vector2f(1.5, 0));
+			if (direction == 1)
+			{
+				circ.move(sf::Vector2f(1.5, 0));
+			}
+			if (direction == 2)
+			{
+				circ.move(sf::Vector2f(-1.5, 0));
+			}
+			if (direction == 3)
+			{
+				circ.move(sf::Vector2f(0, 1.5));
+			}
+			if (direction == 4)
+			{
+				circ.move(sf::Vector2f(0, -1.5));
+			}
+			if (direction == 5)
+			{
+				circ.move(sf::Vector2f(-1.5, 1.5));
+			}
+			if (direction == 6)
+			{
+				circ.move(sf::Vector2f(1.5, 1.5));
+			}
+			if (direction == 7)
+			{
+				circ.move(sf::Vector2f(-1.5, -1.5));
+			}
+			if (direction == 8)
+			{
+				circ.move(sf::Vector2f(1.5, -1.5));
+			}
 		}
-		 if (direction == 2)
-		{
-			circ.move(sf::Vector2f(-1.5, 0));
-		}
-		 if (direction == 3)
-		{
-			circ.move(sf::Vector2f(0, 1.5));
-		}
-		 if (direction == 4)
-		{
-			circ.move(sf::Vector2f(0, -1.5));
-		}
-		 if (direction == 5)
-		 {
-			 circ.move(sf::Vector2f(-1.5, 1.5));
-		 }
 	}
-
 }
 
 void Player::rotateUpdate(sf::RenderWindow &window) {

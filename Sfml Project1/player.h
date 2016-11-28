@@ -15,7 +15,7 @@ public:
 	Player();
 	~Player();
 	void movement();
-	void update(sf::RenderWindow &window, Wall & wall);
+	void update(sf::RenderWindow &window, std::vector<Wall>&mapArray, int wallAmount);
 	float rotation = 0;
 	int direction = 0;
 

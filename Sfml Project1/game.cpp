@@ -8,16 +8,22 @@
 using namespace std;
 
 void screenRender(sf::RenderWindow &window, Player&player, Wall &wall, Enemy &enemy1);
+void mapLoad(Wall&wall, vector<Wall>& mapArray);
 int main() {
 	float rotation = 0;
 	int counter = 0;
-	sf::RenderWindow window(sf::VideoMode(800, 740), "SFML Application"); //Window name + Standard screen
+	sf::RenderWindow window(sf::VideoMode(900, 800), "SFML Application"); //Window name + Standard screen
 	window.setFramerateLimit(240);
 	window.setMouseCursorVisible(false);
 
 	
 
 	Wall wall1;
+	int wallAmount = 3;
+	vector<Wall> mapArray;
+
+	mapLoad(wall1, mapArray);
+
 	Enemy enemy1;
 	Player player;
 	sf::Texture backgroud;
@@ -33,7 +39,7 @@ int main() {
 	sf::Time time, timeTest;
 
 	bool test = false;
-
+	
 	vector<Projectile>::const_iterator iter;
 	vector<Projectile> projectileArray;
 
@@ -48,6 +54,7 @@ int main() {
 			if (event.type == sf::Event::Closed) {
 				window.close();
 			}
+			
 			//Event test Can be deleted
 			switch (event.type)
 			{
@@ -115,7 +122,7 @@ int main() {
 		
 
 		enemy1.update(player.circ.getPosition());
-		player.update(window, wall1);
+		player.update(window, mapArray, wallAmount);
 		player.movement();
 
 		//sf::Vector2i mouse = sf::Mouse::getPosition(window);
@@ -135,9 +142,10 @@ int main() {
 
 			counter++;
 		}
-		counter = 0;
+	
 		/*vector<Projectile> testt = enemy1.getProjectileArray();
-		for (iter = enemy1.getProjectileArray().begin(); iter != enemy1.getProjectileArray().end(); iter++)
+		std::vector<Projectile>::const_iterator iter15 = enemy1.getProjectileIter();
+		for (iter15 = testt.begin(); iter15 != testt.end(); iter15++)
 		{
 			testt[counter].update();
 			window.draw(enemy1.getProjectileArray()[counter].rect);
@@ -145,6 +153,13 @@ int main() {
 			counter++;
 		}
 		enemy1.setProjectileArray(testt);*/
+		counter = 0;
+		for (size_t i = 0; i < wallAmount; i++)
+		{
+			
+			window.draw(mapArray[i].rect);
+			counter++;
+		}
 		screenRender(window,player,wall1,enemy1);
 		window.draw(particles);
 		window.display();
@@ -158,9 +173,21 @@ void screenRender(sf::RenderWindow &window, Player&player, Wall &wall1, Enemy &e
 	window.draw(player.pointer);
 	window.draw(player.circ);
 	window.draw(enemy1.circ);
-	window.draw(wall1.rect);
+	//window.draw(wall1.rect);
 	window.draw(player.curser);
 
+}
+
+void mapLoad(Wall &wall, vector<Wall>& mapArray)
+{
+	wall.rect.setPosition(50*1, 50*8);
+	wall.rect.setSize(sf::Vector2f(50 * 8, 50 * 1));
+	mapArray.push_back(wall);
+	wall.rect.setPosition(50* 11, 50*8);
+	wall.rect.setSize(sf::Vector2f(50 * 8, 50 * 1));
+	mapArray.push_back(wall);
+	wall.rect.setPosition(300, 300);
+	mapArray.push_back(wall);
 }
 
 

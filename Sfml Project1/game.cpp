@@ -5,6 +5,7 @@
 #include "enemy.h"
 #include "projectile.h"
 #include "particle.h"
+#include "GameLogi.h"
 using namespace std;
 
 void screenRender(sf::RenderWindow &window, Player&player, Wall &wall, Enemy &enemy1);
@@ -24,27 +25,38 @@ int main() {
 
 	mapLoad(wall1, mapArray);
 
-	Enemy enemy1;
+	/*Enemy enemy1;
+	*/
+	vector<Enemy> enemyArray;
+
 	Player player;
-	sf::Texture backgroud;
-	if (!backgroud.loadFromFile("backgound.jpg"))
-	{
-		return EXIT_FAILURE;
-	}
-	sf::Sprite backgroundSP;
-	backgroundSP.setTexture(backgroud);
+	
+	Game game;
 	
 	sf::Clock clock;
 	sf::Clock ptclock;
+	sf::Clock gameTime;
 	sf::Time time, timeTest;
 
 	bool test = false;
+	vector<Projectile>::const_iterator enyPro;
+	vector<Projectile> enemyProjectile;
+
 	
 	vector<Projectile>::const_iterator iter;
 	vector<Projectile> projectileArray;
 
-	Projectile projectile1;
+	/*Projectile projectile1;*/
 	ParticleSystem particles(1000);
+
+	/*enemy1.circ.setPosition(50, 50);
+	enemyArray.push_back(enemy1);
+	enemy1.circ.setPosition(150, 150);
+	enemyArray.push_back(enemy1);
+	enemy1.circ.setPosition(100, 100);
+	enemyArray.push_back(enemy1);*/
+
+	int enemyAmount = game.getEnyAmount();
 
 	while (window.isOpen()) { // When open, DO following
 
@@ -70,8 +82,9 @@ int main() {
 		//cout << time.asSeconds() << endl;
 		//clock.restart();
 		//
+		game.update(gameTime.restart().asSeconds(), window);
 
-		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+		/*if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 		{
 			if (player.getAmmo() < player.getAmmoCap())
 			{
@@ -90,40 +103,50 @@ int main() {
 				}
 			}
 			
-		}
+		}*/
 		//cout << player.getAmmo() << endl;
 		if (time >= (timeTest + sf::seconds(0.2)))
 		{
 			test = false;
 		}
-		counter = 0;
-		for (iter = projectileArray.begin(); iter != projectileArray.end(); iter++)
-		{
-			if (projectileArray[counter].rect.getGlobalBounds().intersects(enemy1.circ.getGlobalBounds()))
-			{
-				enemy1.enemyHit(projectileArray[counter].headShoot);
-				particles.setEmitter(enemy1.circ.getPosition());
-				particles.execute(player);
-				projectileArray[counter].destory = true;
-			}
-			counter++;
-		}
-		counter = 0;
-		for (iter = projectileArray.begin(); iter != projectileArray.end(); iter++)
-		{
-			if (projectileArray[counter].destory == true)
-			{
-				projectileArray.erase(iter);
-				break;
-			}
-			counter++;
-		}
 
+
+		//IF BULLET HITS ENEMY OR WALL DESTORY THAT BULLET//
+
+		//counter = 0;
+		//for (iter = projectileArray.begin(); iter != projectileArray.end(); iter++)
+		//{
+		//	for (size_t i = 0; i < wallAmount; i++)
+		//	{
+		//		if (projectileArray[counter].rect.getGlobalBounds().intersects(mapArray[i].rect.getGlobalBounds()))
+		//		{
+		//			projectileArray[counter].destory = true;
+		//		}
+		//	}
+
+		//	if (projectileArray[counter].rect.getGlobalBounds().intersects(enemy1.circ.getGlobalBounds()))
+		//	{
+		//		enemy1.enemyHit(projectileArray[counter].headShoot);
+		//		//enemyArray.erase(enemyArray.begin()+1);
+		//		particles.setEmitter(enemy1.circ.getPosition());
+		//		particles.execute(player);
+		//		projectileArray[counter].destory = true;
+		//	}
+		//	counter++;
+		//}
+		//------------------------------------------------// 
+		//If bullet BOOL destroy == true. DESTROY---------//
+		/*counter = 0;
+		*/
+		//------------------------------------------------//
 		
-
-		enemy1.update(player.circ.getPosition());
-		player.update(window, mapArray, wallAmount);
-		player.movement();
+		/*for (size_t i = 0; i < enemyAmount; i++)
+		{
+			enemyArray[i].update(player.circ.getPosition());
+		}*/
+		//enemy1.update(player.circ.getPosition());
+		//player.update(window, mapArray, wallAmount);
+		//player.movement();
 
 		//sf::Vector2i mouse = sf::Mouse::getPosition(window);
 		//particles.setEmitter(window.mapPixelToCoords(mouse));
@@ -132,16 +155,26 @@ int main() {
 		sf::Time elapsed = ptclock.restart();
 		particles.update(elapsed,player);
 
+		//enemyArray = game.getEnyVector();
+		projectileArray = game.getProVector();
+		enemyProjectile = game.getEnyProVector();
 		window.clear();
-		window.draw(backgroundSP);
+		window.draw(game);
+
 		counter = 0;
 		for (iter = projectileArray.begin(); iter != projectileArray.end(); iter++)
 		{
-			projectileArray[counter].update();
 			window.draw(projectileArray[counter].rect);
-
 			counter++;
 		}
+		counter = 0;
+		for (enyPro = enemyProjectile.begin(); enyPro != enemyProjectile.end(); enyPro++)
+		{
+			window.draw(enemyProjectile[counter].rect);
+			counter++;
+		}
+
+		
 	
 		/*vector<Projectile> testt = enemy1.getProjectileArray();
 		std::vector<Projectile>::const_iterator iter15 = enemy1.getProjectileIter();
@@ -153,14 +186,15 @@ int main() {
 			counter++;
 		}
 		enemy1.setProjectileArray(testt);*/
-		counter = 0;
-		for (size_t i = 0; i < wallAmount; i++)
+		
+
+		
+
+		/*for (size_t i = 0; i < wallAmount; i++)
 		{
-			
 			window.draw(mapArray[i].rect);
-			counter++;
-		}
-		screenRender(window,player,wall1,enemy1);
+		}*/
+		//screenRender(window,player,wall1,enemy1); //Inlagd
 		window.draw(particles);
 		window.display();
 
@@ -172,7 +206,7 @@ void screenRender(sf::RenderWindow &window, Player&player, Wall &wall1, Enemy &e
 
 	window.draw(player.pointer);
 	window.draw(player.circ);
-	window.draw(enemy1.circ);
+	//window.draw(enemy1.circ);
 	//window.draw(wall1.rect);
 	window.draw(player.curser);
 
@@ -186,7 +220,7 @@ void mapLoad(Wall &wall, vector<Wall>& mapArray)
 	wall.rect.setPosition(50* 11, 50*8);
 	wall.rect.setSize(sf::Vector2f(50 * 8, 50 * 1));
 	mapArray.push_back(wall);
-	wall.rect.setPosition(300, 300);
+	wall.rect.setPosition(300, 150);
 	mapArray.push_back(wall);
 }
 

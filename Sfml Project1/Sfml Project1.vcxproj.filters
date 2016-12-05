@@ -36,6 +36,12 @@
     <ClCompile Include="particle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GameLogi.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="flashBang.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="entity.h">
@@ -54,6 +60,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="particle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLogi.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="flashBang.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

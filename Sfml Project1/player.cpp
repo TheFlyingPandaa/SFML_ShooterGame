@@ -153,3 +153,10 @@ void Player::rotateUpdate(sf::RenderWindow &window) {
 
 	pointer.setRotation(-90 + this->rotation);
 }
+
+void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
+{
+	target.draw(pointer);
+	target.draw(circ);
+	target.draw(curser);
+}

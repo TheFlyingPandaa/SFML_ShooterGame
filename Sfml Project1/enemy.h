@@ -3,7 +3,7 @@
 #include "entity.h"
 #include "projectile.h"
 
-class Enemy: public Entity
+class Enemy: public sf::Drawable, public Entity
 {
 public:
 	Enemy();
@@ -13,11 +13,10 @@ public:
 	int direc = 0;
 	int count = 0;
 
-	std::vector<Projectile> getProjectileArray();
-	void setProjectileArray(std::vector<Projectile>& pro);
-	std::vector<Projectile>::const_iterator getProjectileIter();
-	
+	float getDistanceToPlayer();
 private:
+
+	void draw(sf::RenderTarget &target, sf::RenderStates states) const;
 	std::vector<Projectile>::const_iterator iter;
 	std::vector<Projectile> enemyProjectArray;
 	Projectile projectile;

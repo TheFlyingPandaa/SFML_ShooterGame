@@ -13,8 +13,15 @@ Projectile::Projectile()
 
 }
 
+
+
 Projectile::~Projectile()
 {
+}
+
+void Projectile::draw(sf::RenderTarget &target, sf::RenderStates states) const
+{
+	target.draw(rect);
 }
 
 void Projectile::update() {

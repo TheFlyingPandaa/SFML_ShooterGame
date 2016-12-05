@@ -2,7 +2,7 @@
 #define PLAYER_H
 #include "entity.h"
 #include "wall.h"
-class Player: public Entity
+class Player: public sf::Drawable, public Entity
 {
 public:
 	int movementSpeed = 1;
@@ -26,6 +26,7 @@ private:
 	int ammoCap = 30;
 	int ammo = 0;
 
+	void draw(sf::RenderTarget &target, sf::RenderStates states) const;
 	void reload();
 };
 

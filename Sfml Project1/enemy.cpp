@@ -12,6 +12,12 @@ Enemy::Enemy()
 	
 }
 
+float Enemy::getDistanceToPlayer()
+{
+	return this->distanceToPlayer;
+}
+
+
 void Enemy::update(const sf::Vector2f& PlayerPlace) {
 	circ.getPosition();
 
@@ -19,7 +25,6 @@ void Enemy::update(const sf::Vector2f& PlayerPlace) {
 	dy = pow(abs(PlayerPlace.y - circ.getPosition().y), 2);
 	distanceToPlayer = sqrt(dx + dy);
 	//std::cout << this->rotation << std::endl;
-	std::cout << this->getProjectileArray().size() << std::endl;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::U)) {
 
 		if (distanceToPlayer < 100)
@@ -62,10 +67,7 @@ Enemy::~Enemy()
 {
 }
 
-void Enemy::setProjectileArray(std::vector<Projectile>&pro)
-{
-	this->getProjectileArray() = pro;
-}
+
 
 
 void Enemy::enemyHit(bool hs) {
@@ -96,12 +98,9 @@ void Enemy::enemyShoot(const sf::Vector2f& PlayerPlace)
 
 }
 
-std::vector<Projectile> Enemy::getProjectileArray()
+
+void Enemy::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-	return this->enemyProjectArray;
+	target.draw(circ);
 }
 
-std::vector<Projectile>::const_iterator Enemy::getProjectileIter()
-{
-	return this->iter;
-}

@@ -1,9 +1,8 @@
 #ifndef PROJECTILE_H
 #define PROJECTILE_H
-
 #include "entity.h"
 
-class Projectile: public Entity
+class Projectile: public sf::Drawable, public Entity
 {
 public:
 	
@@ -17,7 +16,7 @@ public:
 	int lifeTimeCounter = 0;
 	int lifeTime = 1000;
 private:
-
+	void draw(sf::RenderTarget &target, sf::RenderStates states) const;
 };
 
 

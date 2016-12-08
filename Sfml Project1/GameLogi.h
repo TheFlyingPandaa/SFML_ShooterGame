@@ -6,6 +6,7 @@
 #include "projectile.h"
 #include "enemy.h"
 #include "flashBang.h"
+#include <vector>
 class Game: public sf::Drawable
 {
 public:
@@ -31,6 +32,7 @@ private:
 	bool justonce = true;
 	void colisionTest();
 
+	bool first = true;
 	//Walls
 	Wall wall;
 	int wallAmount = 0;

@@ -14,7 +14,11 @@ public:
 	float dLenght =10000;
 
 	bool active = false;
+	bool throws = false;
+	bool bangs = false;
 
+	sf::Time timeAmount;
+	void explode();
 	void update(sf::Vector2f&playerPos);
 private:
 	void draw(sf::RenderTarget &target, sf::RenderStates states) const;

@@ -53,19 +53,37 @@ void Game::update(float dt, sf::RenderWindow &window)
 		flashbang.rect.setPosition(mPlayer.circ.getPosition());
 		flashLenght = mPlayer.lenght;
 	}
-	playerPos = mPlayer.circ.getPosition();
-	flashbang.update(playerPos);
+	//playerPos = mPlayer.circ.getPosition();
+	flashbang.update(sf::Vector2f(mPlayer.circ.getPosition()));
 	std::cout << mPlayer.lenght << std::endl;
+
 	if (flashLenght <= flashbang.dLenght)
 	{
 		flashbang.active = false;
+		if (flashbang.throws == true)
+		{
+			flashbang.explode();
+			flashbang.timeAmount = time;
+		}
 	}
+
+	if (flashbang.bangs == true)
+	{
+		if (flashbang.timeAmount + sf::seconds(3) < time)
+		{
+			flashbang.bangs = false;
+		}
+	}
+
+
+
 	if (enemyArray[0].getDistanceToPlayer() < 100)
 	{
 		if (enyTest != true)
 		{
+			enemyArray[0].enemyShoot(sf::Vector2f(mPlayer.circ.getPosition()));
 			mProjectile.rect.setPosition(enemyArray[0].circ.getPosition());
-			mProjectile.direction = mPlayer.rotation - 180;
+			mProjectile.direction = enemyArray[0].getRotation();
 			projectileArray.push_back(mProjectile);
 			enyTest = true;
 
@@ -144,6 +162,19 @@ void Game::colisionTest()
 			break;
 		}
 		counter++;
+	}
+
+	if (flashbang.throws == true)
+	{
+		for (size_t i = 0; i < this->wallAmount; i++)
+		{
+			if(flashbang.rect.getGlobalBounds().intersects(wallArray[i].rect.getGlobalBounds()))
+			{
+				flashbang.explode();
+				flashbang.timeAmount = time;
+				flashbang.active = false;
+			}
+		}
 	}
 }
 

@@ -12,16 +12,16 @@ public:
 	void enemyHit(bool hs);
 	int direc = 0;
 	int count = 0;
-
+	bool blinded = false;
 	float getDistanceToPlayer();
+	float getRotation();
+	void enemyShoot(const sf::Vector2f& PlayerPlace);
 private:
 
 	void draw(sf::RenderTarget &target, sf::RenderStates states) const;
-	std::vector<Projectile>::const_iterator iter;
-	std::vector<Projectile> enemyProjectArray;
-	Projectile projectile;
+	
 
-	void enemyShoot(const sf::Vector2f& PlayerPlace);
+	
 
 	int hitPoints = 100;
 	float distanceToPlayer = 0;

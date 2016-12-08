@@ -61,6 +61,14 @@ void Enemy::update(const sf::Vector2f& PlayerPlace) {
 			count = 0;
 		}
 	}
+
+
+	if (blinded == true)
+	{
+		this->speed = 0;
+
+	}
+
 }
 
 Enemy::~Enemy()
@@ -92,10 +100,6 @@ void Enemy::enemyShoot(const sf::Vector2f& PlayerPlace)
 
 	circ.setRotation(-90 + this->rotation);
 
-	projectile.rect.setPosition(circ.getPosition());
-	projectile.direction = circ.getRotation();
-	enemyProjectArray.push_back(projectile);
-
 }
 
 
@@ -104,3 +108,7 @@ void Enemy::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	target.draw(circ);
 }
 
+float Enemy::getRotation()
+{
+	return this->rotation;
+}

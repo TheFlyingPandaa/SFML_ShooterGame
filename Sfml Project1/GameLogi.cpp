@@ -55,7 +55,7 @@ void Game::update(float dt, sf::RenderWindow &window)
 	}
 	//playerPos = mPlayer.circ.getPosition();
 	flashbang.update(sf::Vector2f(mPlayer.circ.getPosition()));
-	std::cout << mPlayer.lenght << std::endl;
+	//std::cout << mPlayer.lenght << std::endl;
 
 	if (flashLenght <= flashbang.dLenght)
 	{
@@ -76,21 +76,22 @@ void Game::update(float dt, sf::RenderWindow &window)
 	}
 
 
-
-	if (enemyArray[0].getDistanceToPlayer() < 100)
+	for (size_t i = 0; i < this->enemyAmount; i++)
 	{
-		if (enyTest != true)
+		if (enemyArray[i].getDistanceToPlayer() < 150)
 		{
-			enemyArray[0].enemyShoot(sf::Vector2f(mPlayer.circ.getPosition()));
-			mProjectile.rect.setPosition(enemyArray[0].circ.getPosition());
-			mProjectile.direction = enemyArray[0].getRotation();
-			projectileArray.push_back(mProjectile);
-			enyTest = true;
+			if (enyTest != true)
+			{
+				enemyArray[i].enemyShoot(sf::Vector2f(mPlayer.circ.getPosition()));
+				eProjectile.rect.setPosition(enemyArray[i].circ.getPosition());
+				eProjectile.direction = enemyArray[i].getRotation();
+				enemyProjectileArr.push_back(eProjectile);
+				enyTest = true;
 
-			enyTimeTest = time;
-			enyTimeTest += sf::seconds(0.2);
+				enyTimeTest = time;
+				enyTimeTest += sf::seconds(0.2);
+			}
 		}
-		
 	}
 	if (time >= timeTest)
 	{
@@ -137,6 +138,14 @@ void Game::colisionTest()
 		{
 			if (projectileArray[counter].rect.getGlobalBounds().intersects(wallArray[i].rect.getGlobalBounds()))
 			{
+				projectileArray[counter].destory = true;
+			}
+		}
+		for (size_t j = 0; j < this->enemyAmount; j++)
+		{
+			if (projectileArray[counter].rect.getGlobalBounds().intersects(enemyArray[j].circ.getGlobalBounds()))
+			{
+				enemyArray[j].enemyHit(projectileArray[counter].headShoot);
 				projectileArray[counter].destory = true;
 			}
 		}

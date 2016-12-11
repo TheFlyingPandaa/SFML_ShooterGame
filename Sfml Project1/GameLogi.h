@@ -45,6 +45,7 @@ private:
 	int enemyAmount = 0;
 	void enemyMap(int & enemyAmount, Enemy &objEnemy, std::vector<Enemy>& enemyArray);
 
+	Projectile eProjectile;
 	std::vector<Projectile> enemyProjectileArr;
 	std::vector<Projectile>::const_iterator enyProIter;
 

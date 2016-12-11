@@ -94,13 +94,19 @@ void Enemy::enemyShoot(const sf::Vector2f& PlayerPlace)
 {
 	
 	dx1 = PlayerPlace.x - circ.getPosition().x;
-	dy1 = PlayerPlace.x - circ.getPosition().y;
+	dy1 = PlayerPlace.y - circ.getPosition().y;
 
-	this->rotation = (atan2(dy, dx)) * 360 / PI;
-
-	circ.setRotation(-90 + this->rotation);
+	this->rotation = (atan2(dy1, dx1)) * 180 / PI;
+	this->rotation -= 180;
+	circ.setRotation(this->rotation );
 
 }
+
+bool Enemy::getDead() const
+{
+	return this->dead;
+}
+
 
 
 void Enemy::draw(sf::RenderTarget& target, sf::RenderStates states) const

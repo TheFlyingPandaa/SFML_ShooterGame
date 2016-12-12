@@ -2,6 +2,7 @@
 #define PLAYER_H
 #include "entity.h"
 #include "wall.h"
+#include "glas.h"
 class Player: public sf::Drawable, public Entity
 {
 public:
@@ -15,7 +16,7 @@ public:
 	Player();
 	~Player();
 	void movement();
-	void update(sf::RenderWindow &window, std::vector<Wall>&mapArray, int wallAmount);
+	void update(sf::RenderWindow &window, std::vector<Wall>&mapArray, int wallAmount, std::vector<Glas>&glasArray, int glasAmount);
 	float rotation = 0;
 	int direction = 0;
 

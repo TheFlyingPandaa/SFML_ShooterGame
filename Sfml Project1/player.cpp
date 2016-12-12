@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <math.h>
 
+
 #define PI 3.14159265;
 
 Player::Player()
@@ -95,7 +96,7 @@ void Player::movement() {
 		direction = 8;
 	}
 }
-void Player::update(sf::RenderWindow &window, std::vector<Wall>&mapArray, int wallAmount) {
+void Player::update(sf::RenderWindow &window, std::vector<Wall>&mapArray, int wallAmount, std::vector<Glas>&glasArray, int glasAmount) {
 	float dx = pow(abs(sf::Mouse::getPosition(window).x - circ.getPosition().x), 2);
 	float dy = pow(abs(sf::Mouse::getPosition(window).y - circ.getPosition().y), 2);
 	
@@ -140,6 +141,48 @@ void Player::update(sf::RenderWindow &window, std::vector<Wall>&mapArray, int wa
 			if (direction == 8)
 			{
 				circ.move(sf::Vector2f(1.5, -1.5));
+			}
+		}
+	}
+
+	for (size_t i = 0; i < glasAmount; i++)
+	{
+		if (glasArray[i].getShatterd() == false)
+		{
+			if (circ.getGlobalBounds().intersects(glasArray[i].rect.getGlobalBounds()))
+			{
+				if (direction == 1)
+				{
+					circ.move(sf::Vector2f(1.5, 0));
+				}
+				if (direction == 2)
+				{
+					circ.move(sf::Vector2f(-1.5, 0));
+				}
+				if (direction == 3)
+				{
+					circ.move(sf::Vector2f(0, 1.5));
+				}
+				if (direction == 4)
+				{
+					circ.move(sf::Vector2f(0, -1.5));
+				}
+				if (direction == 5)
+				{
+					circ.move(sf::Vector2f(-1.5, 1.5));
+				}
+				if (direction == 6)
+				{
+					circ.move(sf::Vector2f(1.5, 1.5));
+				}
+				if (direction == 7)
+				{
+					circ.move(sf::Vector2f(-1.5, -1.5));
+				}
+				if (direction == 8)
+				{
+					circ.move(sf::Vector2f(1.5, -1.5));
+				}
 			}
 		}
 	}

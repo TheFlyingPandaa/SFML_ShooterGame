@@ -1,14 +1,30 @@
-﻿Build started 2016-12-12 11:52:09.
+﻿Build started 2016-12-12 21:18:33.
      1>Project "C:\Users\Root\Documents\GitHubCode\GameProject\Sfml Project1\Sfml Project1.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         E:\Programm\Visual Studio\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt wall.cpp
-         wall.cpp
+         E:\Programm\Visual Studio\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt GameLogi.cpp
+         GameLogi.cpp
+     1>c:\users\root\documents\githubcode\gameproject\sfml project1\gamelogi.cpp(36): warning C4018: '<': signed/unsigned mismatch
+     1>c:\users\root\documents\githubcode\gameproject\sfml project1\gamelogi.cpp(46): warning C4305: 'argument': truncation from 'double' to 'float'
+     1>c:\users\root\documents\githubcode\gameproject\sfml project1\gamelogi.cpp(81): warning C4018: '<': signed/unsigned mismatch
+     1>c:\users\root\documents\githubcode\gameproject\sfml project1\gamelogi.cpp(97): warning C4305: 'argument': truncation from 'double' to 'float'
+     1>c:\users\root\documents\githubcode\gameproject\sfml project1\gamelogi.cpp(107): warning C4018: '<': signed/unsigned mismatch
+     1>c:\users\root\documents\githubcode\gameproject\sfml project1\gamelogi.cpp(128): warning C4018: '<': signed/unsigned mismatch
+     1>c:\users\root\documents\githubcode\gameproject\sfml project1\gamelogi.cpp(159): warning C4018: '<': signed/unsigned mismatch
+     1>c:\users\root\documents\githubcode\gameproject\sfml project1\gamelogi.cpp(166): warning C4018: '<': signed/unsigned mismatch
+     1>c:\users\root\documents\githubcode\gameproject\sfml project1\gamelogi.cpp(174): warning C4018: '<': signed/unsigned mismatch
+     1>c:\users\root\documents\githubcode\gameproject\sfml project1\gamelogi.cpp(213): warning C4018: '<': signed/unsigned mismatch
+     1>c:\users\root\documents\githubcode\gameproject\sfml project1\gamelogi.cpp(231): warning C4018: '<': signed/unsigned mismatch
+     1>c:\users\root\documents\githubcode\gameproject\sfml project1\gamelogi.cpp(214): warning C4390: ';': empty controlled statement found; is this the intent?
+     1>c:\users\root\documents\githubcode\gameproject\sfml project1\gamelogi.cpp(269): warning C4018: '<': signed/unsigned mismatch
+     1>c:\users\root\documents\githubcode\gameproject\sfml project1\gamelogi.cpp(275): warning C4018: '<': signed/unsigned mismatch
+     1>c:\users\root\documents\githubcode\gameproject\sfml project1\gamelogi.cpp(279): warning C4018: '<': signed/unsigned mismatch
        Link:
          E:\Programm\Visual Studio\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Root\Documents\GitHubCode\GameProject\Debug\Sfml Project1.exe" /INCREMENTAL /NOLOGO "sfml-graphics-d.lib" "sfml-window-d.lib" "sfml-system-d.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"C:\Users\Root\Documents\GitHubCode\GameProject\Debug\Sfml Project1.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Root\Documents\GitHubCode\GameProject\Debug\Sfml Project1.lib" /MACHINE:X86 Debug\enemy.obj
          Debug\entity.obj
          Debug\flashBang.obj
          Debug\game.obj
          Debug\GameLogi.obj
+         Debug\glas.obj
          Debug\particle.obj
          Debug\player.obj
          Debug\projectile.obj
@@ -18,4 +34,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:26.15
+Time Elapsed 00:00:00.96

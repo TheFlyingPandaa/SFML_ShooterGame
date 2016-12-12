@@ -133,6 +133,7 @@
     <ClCompile Include="flashBang.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="GameLogi.cpp" />
+    <ClCompile Include="glas.cpp" />
     <ClCompile Include="particle.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="projectile.cpp" />
@@ -143,6 +144,7 @@
     <ClInclude Include="entity.h" />
     <ClInclude Include="flashBang.h" />
     <ClInclude Include="GameLogi.h" />
+    <ClInclude Include="glas.h" />
     <ClInclude Include="particle.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="projectile.h" />

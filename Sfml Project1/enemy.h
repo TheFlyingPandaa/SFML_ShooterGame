@@ -25,6 +25,9 @@ public:
 	float getRotation();
 	bool getDead() const;
 	void enemyShoot(const sf::Vector2f& PlayerPlace);
+
+	bool getEnyDead() const;
+	void setEnyDead(bool bol);
 private:
 
 	void draw(sf::RenderTarget &target, sf::RenderStates states) const;
@@ -39,6 +42,7 @@ private:
 	double speed = 0.2;
 	float rotation = 0;
 
+	bool enyDead = false;
 	bool enyTest = false;
 	sf::Time enyTime;
 };

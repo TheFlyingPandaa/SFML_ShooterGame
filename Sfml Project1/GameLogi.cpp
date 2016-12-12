@@ -6,6 +6,7 @@ Game::Game()
 	loadTextures();
 	wallMap(this->wallAmount, this->wall, this->wallArray);
 	enemyMap(this->enemyAmount, this->objEnemy, this->enemyArray);
+	glasMap();
 }
 
 Game::~Game()
@@ -19,7 +20,7 @@ void Game::update(float dt, sf::RenderWindow &window)
 	time += clock.getElapsedTime();
 	clock.restart();
 	//std::cout << projectileArray.capacity() << std::endl;
-	mPlayer.update(window, this->wallArray, this->wallAmount);
+	mPlayer.update(window, this->wallArray, this->wallAmount, this->glasArray, this->glasAmount);
 	mPlayer.movement();
 
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
@@ -79,22 +80,22 @@ void Game::update(float dt, sf::RenderWindow &window)
 
 	for (size_t i = 0; i < this->enemyAmount; i++)
 	{
-		if (enemyArray[i].getDistanceToPlayer() < 150)
+		if (enemyArray[i].getEnyDead() == false)
 		{
-			if (enemyArray[i].getBlinded() == false)
+			if (enemyArray[i].getDistanceToPlayer() < 150)
 			{
-				if (enemyArray[i].getEnyTest() != true)
+				if (enemyArray[i].getBlinded() == false)
 				{
-					enemyArray[i].enemyShoot(sf::Vector2f(mPlayer.circ.getPosition()));
-					eProjectile.rect.setPosition(enemyArray[i].circ.getPosition());
-					eProjectile.direction = enemyArray[i].getRotation();
-					enemyProjectileArr.push_back(eProjectile);
-					//enyTest = true;
-					enemyArray[i].setEnyTest(true);
+					if (enemyArray[i].getEnyTest() != true)
+					{
+						enemyArray[i].enemyShoot(sf::Vector2f(mPlayer.circ.getPosition()));
+						eProjectile.rect.setPosition(enemyArray[i].circ.getPosition());
+						eProjectile.direction = enemyArray[i].getRotation();
+						enemyProjectileArr.push_back(eProjectile);
+						enemyArray[i].setEnyTest(true);
 
-					enemyArray[i].setEnyTime((time + sf::seconds(0.4)));
-					//enyTimeTest = time;
-					//enyTimeTest += sf::seconds(0.2);
+						enemyArray[i].setEnyTime((time + sf::seconds(0.4)));
+					}
 				}
 			}
 		}
@@ -126,17 +127,20 @@ void Game::update(float dt, sf::RenderWindow &window)
 
 	for (size_t i = 0; i < enemyAmount; i++)
 	{
-		enemyArray[i].update(mPlayer.circ.getPosition());
-		if (flashbang.bangs == true)
+		if (enemyArray[i].getEnyDead() == false)
 		{
-			if (enemyArray[i].circ.getGlobalBounds().intersects(flashbang.circ.getGlobalBounds()))
+			enemyArray[i].update(mPlayer.circ.getPosition());
+			if (flashbang.bangs == true)
 			{
-				enemyArray[i].setBlinded(true);
+				if (enemyArray[i].circ.getGlobalBounds().intersects(flashbang.circ.getGlobalBounds()))
+				{
+					enemyArray[i].setBlinded(true);
+				}
 			}
-		}
-		if (flashbang.bangs == false)
-		{
-			enemyArray[i].setBlinded(false);
+			if (flashbang.bangs == false)
+			{
+				enemyArray[i].setBlinded(false);
+			}
 		}
 	}
 
@@ -165,6 +169,18 @@ void Game::colisionTest()
 			{
 				enemyArray[j].enemyHit(projectileArray[counter].headShoot);
 				projectileArray[counter].destory = true;
+			}
+		}
+		for (size_t t = 0; t < this->glasAmount; t++)
+		{
+			if (glasArray[t].getShatterd() == false)
+			{
+				if (projectileArray[counter].rect.getGlobalBounds().intersects(glasArray[t].rect.getGlobalBounds()))
+				{
+					projectileArray[counter].destory = true;
+					glasArray[t].setShatterd(true);
+					glasArray[t].glasShatter();
+				}
 			}
 		}
 		counter++;
@@ -250,7 +266,12 @@ void Game::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
 	
 	target.draw(windowBGSprite);
+	for (size_t i = 0; i < this->glasAmount; i++)
+	{
+		target.draw(glasArray[i]);
+	}
 	target.draw(mPlayer);
+	
 	for (size_t i = 0; i < this->wallAmount; i++)
 	{
 		target.draw(wallArray[i].rect);
@@ -259,9 +280,9 @@ void Game::draw(sf::RenderTarget &target, sf::RenderStates states) const
 	{
 		target.draw(enemyArray[i]);
 	}
+	
 	target.draw(flashbang);
 }
-
 
 
 void Game::loadTextures()
@@ -314,3 +335,24 @@ void Game::enemyMap(int& enemyAmount, Enemy& objEnemy, std::vector<Enemy>& enemy
 	objEnemy.rect.setPosition(100, 100);
 	enemyAmount = 3;
 }
+
+void Game::glasMap()
+{
+	glas.rect.setPosition(50 * 5.5, 50 * 5.5);
+	glas.rect.setSize(sf::Vector2f(50 * 0.5, 50 * 1));
+	glasArray.push_back(glas);
+
+	glas.rect.setPosition(50 * 5.5, 50 * 6.5);
+	glas.rect.setSize(sf::Vector2f(50 * 0.5, 50 * 1));
+	glasArray.push_back(glas);
+
+	glas.rect.setPosition(50 * 5.5, 50 * 7.5);
+	glas.rect.setSize(sf::Vector2f(50 * 0.5, 50 * 1));
+	glasArray.push_back(glas);
+
+	glas.rect.setPosition(50 * 5.5, 50 * 8.5);
+	glas.rect.setSize(sf::Vector2f(50 * 0.5, 50 * 1));
+	glasArray.push_back(glas);
+	glasAmount = 4;
+}
+

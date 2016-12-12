@@ -6,6 +6,7 @@
 #include "projectile.h"
 #include "enemy.h"
 #include "flashBang.h"
+#include "glas.h"
 #include <vector>
 class Game: public sf::Drawable
 {
@@ -33,12 +34,19 @@ private:
 	void colisionTest();
 	int k = 0;
 	bool first = true;
+
 	//Walls
 	Wall wall;
 	int wallAmount = 0;
 	std::vector<Wall> wallArray;
 	void wallMap(int & wallAmount, Wall & wall, std::vector<Wall>& wallArray);
-	
+
+
+	Glas glas;
+	std::vector<Glas> glasArray;
+	int glasAmount = 0;
+	void glasMap();
+
 	Enemy objEnemy;
 	std::vector<Enemy> enemyArray;
 	std::vector<Enemy>::const_iterator enyIter;

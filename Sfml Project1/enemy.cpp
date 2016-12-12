@@ -28,21 +28,22 @@ void Enemy::update(const sf::Vector2f& PlayerPlace) {
 	dy = pow(abs(PlayerPlace.y - circ.getPosition().y), 2);
 	distanceToPlayer = sqrt(dx + dy);
 	//std::cout << this->rotation << std::endl;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::U)) {
+	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::U)) {
 
-		if (distanceToPlayer < 100)
-		{
-			//this->speed = 1;
-			//enemyShoot(PlayerPlace);
-		}
-		else
-		{
-			this->speed = 0.2;
-		}
-	}
+	//	if (distanceToPlayer < 100)
+	//	{
+	//		//this->speed = 1;
+	//		//enemyShoot(PlayerPlace);
+	//	}
+	//	else
+	//	{
+	//		this->speed = 0.2;
+	//	}
+	//}
 	if (this->hitPoints <= 0)
 	{
-		circ.setFillColor(sf::Color::Transparent);
+		//circ.setFillColor(sf::Color::Transparent);
+		this->enyDead = true;
 	}
 	if (blinded == false)
 	{
@@ -157,4 +158,16 @@ bool Enemy::getEnyTest() const
 {
 	return this->enyTest;
 }
+
+bool Enemy::getEnyDead() const
+{
+	return this->enyDead;
+}
+
+void Enemy::setEnyDead(bool bol)
+{
+	this->enyDead = bol;
+}
+
+
 

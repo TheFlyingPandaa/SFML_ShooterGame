@@ -10,6 +10,9 @@ Enemy::Enemy()
 	circ.setPosition(sf::Vector2f(200, 200));
 	circ.setOrigin(sf::Vector2f(10, 10));
 	
+	circ.setOutlineThickness(2.f);
+	circ.setOutlineColor(sf::Color::Black);
+
 }
 
 float Enemy::getDistanceToPlayer()

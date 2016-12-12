@@ -10,6 +10,10 @@ Player::Player()
 	circ.setRadius(10.f);
 	circ.setPosition(100, 100);
 	circ.setOrigin(sf::Vector2f(10, 10));
+
+	circ.setOutlineThickness(2.f);
+	circ.setOutlineColor(sf::Color::Black);
+
 	pointer.setFillColor(sf::Color::Red);
 	pointer.setSize(sf::Vector2f(2.5, 300));
 	pointer.setOrigin(sf::Vector2f(1.25, 0));

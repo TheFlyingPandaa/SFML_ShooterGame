@@ -41,34 +41,40 @@ void Enemy::update(const sf::Vector2f& PlayerPlace) {
 	{
 		circ.setFillColor(sf::Color::Transparent);
 	}
-	if (direc == 0)
+	if (blinded == false)
 	{
-		circ.move(sf::Vector2f(this->speed, 0));
-		count++;
-		if (count >= 1000)
+		if (direc == 0)
 		{
-			direc = 1;
-			count = 0;
+			circ.move(sf::Vector2f(this->speed, 0));
+			count++;
+			if (count >= 1000)
+			{
+				direc = 1;
+				count = 0;
+			}
+		}
+		if (direc == 1)
+		{
+			circ.move(sf::Vector2f(-this->speed, 0));
+			count++;
+			if (count >= 1000)
+			{
+				direc = 0;
+				count = 0;
+			}
 		}
 	}
-	if (direc == 1)
-	{
-		circ.move(sf::Vector2f(-this->speed, 0));
-		count++;
-		if (count >= 1000)
-		{
-			direc = 0;
-			count = 0;
-		}
-	}
+	
 
 
-	if (blinded == true)
+	/*if (blinded == true)
 	{
 		this->speed = 0;
-
 	}
-
+	if (blinded == false)
+	{
+		this->speed = 0.2;
+	}*/
 }
 
 Enemy::~Enemy()
@@ -118,3 +124,34 @@ float Enemy::getRotation()
 {
 	return this->rotation;
 }
+
+void Enemy::setBlinded(bool bol)
+{
+	this->blinded = bol;
+}
+
+bool Enemy::getBlinded() const
+{
+	return this->blinded;
+}
+
+sf::Time Enemy::getEnyTime() const
+{
+	return this->enyTime;
+}
+
+void Enemy::setEnyTime(sf::Time enyTime)
+{
+	this->enyTime = enyTime;
+}
+
+void Enemy::setEnyTest(bool enyTest)
+{
+	this->enyTest = enyTest;
+}
+
+bool Enemy::getEnyTest() const
+{
+	return this->enyTest;
+}
+

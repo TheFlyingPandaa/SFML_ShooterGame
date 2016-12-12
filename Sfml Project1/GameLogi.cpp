@@ -27,6 +27,7 @@ void Game::update(float dt, sf::RenderWindow &window)
 		std::cout << "pew pew" << std::endl;
 		if (mPlayer.getAmmo() < mPlayer.getAmmoCap())
 		{
+			
 			if (testt != true)
 			{
 				mProjectile.rect.setPosition(mPlayer.circ.getPosition());
@@ -80,16 +81,21 @@ void Game::update(float dt, sf::RenderWindow &window)
 	{
 		if (enemyArray[i].getDistanceToPlayer() < 150)
 		{
-			if (enyTest != true)
+			if (enemyArray[i].getBlinded() == false)
 			{
-				enemyArray[i].enemyShoot(sf::Vector2f(mPlayer.circ.getPosition()));
-				eProjectile.rect.setPosition(enemyArray[i].circ.getPosition());
-				eProjectile.direction = enemyArray[i].getRotation();
-				enemyProjectileArr.push_back(eProjectile);
-				enyTest = true;
+				if (enemyArray[i].getEnyTest() != true)
+				{
+					enemyArray[i].enemyShoot(sf::Vector2f(mPlayer.circ.getPosition()));
+					eProjectile.rect.setPosition(enemyArray[i].circ.getPosition());
+					eProjectile.direction = enemyArray[i].getRotation();
+					enemyProjectileArr.push_back(eProjectile);
+					//enyTest = true;
+					enemyArray[i].setEnyTest(true);
 
-				enyTimeTest = time;
-				enyTimeTest += sf::seconds(0.2);
+					enemyArray[i].setEnyTime((time + sf::seconds(0.4)));
+					//enyTimeTest = time;
+					//enyTimeTest += sf::seconds(0.2);
+				}
 			}
 		}
 	}
@@ -97,11 +103,12 @@ void Game::update(float dt, sf::RenderWindow &window)
 	{
 		testt = false;
 	}
-	if (time >= enyTimeTest)
-	{
-		enyTest = false;
+	for (size_t i = 0; i < this->enemyAmount; i++) {
+		if (time >= enemyArray[i].getEnyTime())
+		{
+			enemyArray[i].setEnyTest(false);
+		}
 	}
-
 	int counter = 0;
 
 	for (enyProIter = enemyProjectileArr.begin(); enyProIter != enemyProjectileArr.end(); enyProIter++)
@@ -120,6 +127,17 @@ void Game::update(float dt, sf::RenderWindow &window)
 	for (size_t i = 0; i < enemyAmount; i++)
 	{
 		enemyArray[i].update(mPlayer.circ.getPosition());
+		if (flashbang.bangs == true)
+		{
+			if (enemyArray[i].circ.getGlobalBounds().intersects(flashbang.circ.getGlobalBounds()))
+			{
+				enemyArray[i].setBlinded(true);
+			}
+		}
+		if (flashbang.bangs == false)
+		{
+			enemyArray[i].setBlinded(false);
+		}
 	}
 
 	
@@ -172,6 +190,25 @@ void Game::colisionTest()
 		}
 		counter++;
 	}
+
+	counter = 0;
+	for (enyProIter = enemyProjectileArr.begin(); enyProIter != enemyProjectileArr.end(); enyProIter++)
+	{
+		for (size_t i = 0; i < this->wallAmount; i++) {
+			if (enemyProjectileArr[counter].rect.getGlobalBounds().intersects(wallArray[i].rect.getGlobalBounds()));
+			{
+			//	enemyProjectileArr[counter].destory = true;
+			}
+		}
+		if (enemyProjectileArr[counter].rect.getPosition().x < 0)
+		{
+			enemyProjectileArr[counter].destory = true;
+		}
+		counter++;
+	}
+
+	
+	
 
 	if (flashbang.throws == true)
 	{
@@ -238,15 +275,31 @@ void Game::loadTextures()
 
 void Game::wallMap(int &wallAmount, Wall &wall, std::vector<Wall> &wallArray)
 {
-	wall.rect.setPosition(50 * 1, 50 * 8);
-	wall.rect.setSize(sf::Vector2f(50 * 8, 50 * 1));
+	wall.rect.setPosition(0, 50*0.5);
+	wall.rect.setSize(sf::Vector2f(50 * 19, 50 * 1));
 	wallArray.push_back(wall);
-	wall.rect.setPosition(50 * 11, 50 * 8);
-	wall.rect.setSize(sf::Vector2f(50 * 8, 50 * 1));
+
+	wall.rect.setPosition(50 * 18.5, 50 * 0);
+	wall.rect.setSize(sf::Vector2f(50 * 1, 50 * 17));
 	wallArray.push_back(wall);
-	wall.rect.setPosition(300, 150);
+
+	wall.rect.setPosition(50*0.5, 50*1);
+	wall.rect.setSize(sf::Vector2f(50 * 1, 50 * 17));
 	wallArray.push_back(wall);
-	wallAmount = 3;
+
+	wall.rect.setPosition(50 * 0, 50 * 16.5);
+	wall.rect.setSize(sf::Vector2f(50 * 19, 50 * 1));
+	wallArray.push_back(wall);
+
+	wall.rect.setPosition(50 * 1, 50 * 4);
+	wall.rect.setSize(sf::Vector2f(50 * 6, 50 * 1));
+	wallArray.push_back(wall);
+
+	wall.rect.setPosition(50 * 1, 50 * 10);
+	wall.rect.setSize(sf::Vector2f(50 * 6, 50 * 1));
+	wallArray.push_back(wall);
+
+	wallAmount = 6;
 }
 
 void Game::enemyMap(int& enemyAmount, Enemy& objEnemy, std::vector<Enemy>& enemyArray)

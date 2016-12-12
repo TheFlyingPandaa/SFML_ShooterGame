@@ -31,7 +31,7 @@ private:
 	bool testt = false;
 	bool justonce = true;
 	void colisionTest();
-
+	int k = 0;
 	bool first = true;
 	//Walls
 	Wall wall;

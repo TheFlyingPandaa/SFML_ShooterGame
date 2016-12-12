@@ -12,7 +12,14 @@ public:
 	void enemyHit(bool hs);
 	int direc = 0;
 	int count = 0;
-	bool blinded = false;
+	
+	void setEnyTime(sf::Time enyTime);
+	sf::Time getEnyTime() const;
+	void setEnyTest(bool enyTest);
+	bool getEnyTest() const;
+
+	void setBlinded(bool bol);
+	bool getBlinded() const;
 
 	float getDistanceToPlayer();
 	float getRotation();
@@ -22,7 +29,7 @@ private:
 
 	void draw(sf::RenderTarget &target, sf::RenderStates states) const;
 	
-
+	bool blinded = false;
 	bool dead = false;
 
 	int hitPoints = 100;
@@ -31,6 +38,9 @@ private:
 	float dx1=0, dy1 = 0;
 	double speed = 0.2;
 	float rotation = 0;
+
+	bool enyTest = false;
+	sf::Time enyTime;
 };
 
 

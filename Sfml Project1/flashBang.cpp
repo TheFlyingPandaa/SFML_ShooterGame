@@ -44,15 +44,16 @@ void Flashbang::update(sf::Vector2f&playerPos)
 	}
 	if (bangs == false)
 	{
-		circ.setFillColor(sf::Color::Transparent);
+		circ.setOutlineColor(sf::Color::Transparent);
 	}
 }
 
 void Flashbang::explode()
 {
 	bangs = true;
-	circ.setFillColor(sf::Color::Yellow);
+	//circ.setFillColor(sf::Color::Yellow);
+	circ.setOutlineColor(sf::Color::Red);
+	circ.setOutlineThickness(2.F);
 	circ.setPosition(rect.getPosition());
-	std::cout << "AWESHEIPQWE" << std::endl;
 }
 

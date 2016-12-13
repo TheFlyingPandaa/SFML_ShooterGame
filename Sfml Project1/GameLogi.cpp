@@ -7,13 +7,15 @@ Game::Game()
 	wallMap(this->wallAmount, this->wall, this->wallArray);
 	enemyMap(this->enemyAmount, this->objEnemy, this->enemyArray);
 	glasMap();
+	nodeMap();
+	enemyArray[0].nodeCatcher(nodeArray);
 }
 
 Game::~Game()
 {
 	flashbang.rect.setPosition(mPlayer.circ.getPosition());
 }
-
+ 
 void Game::update(float dt, sf::RenderWindow &window)
 {
 	//Player
@@ -280,7 +282,10 @@ void Game::draw(sf::RenderTarget &target, sf::RenderStates states) const
 	{
 		target.draw(enemyArray[i]);
 	}
-	
+	for (size_t i = 0; i < 4; i++)
+	{
+		target.draw(nodeArray[0][i]);
+	}
 	target.draw(flashbang);
 }
 
@@ -325,7 +330,7 @@ void Game::wallMap(int &wallAmount, Wall &wall, std::vector<Wall> &wallArray)
 
 void Game::enemyMap(int& enemyAmount, Enemy& objEnemy, std::vector<Enemy>& enemyArray)
 {
-	objEnemy.circ.setPosition(200, 200);
+	objEnemy.circ.setPosition(75, 425);
 	enemyArray.push_back(objEnemy);
 	objEnemy.circ.setPosition(300, 300);
 	enemyArray.push_back(objEnemy);
@@ -355,4 +360,19 @@ void Game::glasMap()
 	glasArray.push_back(glas);
 	glasAmount = 4;
 }
+
+void Game::nodeMap()
+{
+	node.rect.setPosition(50 * 1.5, 50 * 8.5);
+	nodeArray[0].push_back(node);
+	node.rect.setPosition(50 * 1.5, 50 * 4.5);
+	nodeArray[0].push_back(node);
+	node.rect.setPosition(50 * 4.5, 50 * 4.5);
+	nodeArray[0].push_back(node);
+	node.rect.setPosition(50 * 4.5, 50 * 8.5);
+	nodeArray[0].push_back(node);
+
+
+}
+
 

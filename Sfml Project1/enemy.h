@@ -2,7 +2,7 @@
 #define ENEMY_H
 #include "entity.h"
 #include "projectile.h"
-
+#include "node.h"
 class Enemy: public sf::Drawable, public Entity
 {
 public:
@@ -28,6 +28,10 @@ public:
 
 	bool getEnyDead() const;
 	void setEnyDead(bool bol);
+
+	/*int getNodeCounter() const;
+	void setNodeCounter(int node);*/
+	void nodeCatcher(std::vector<Node> *& nodeArray);
 private:
 
 	void draw(sf::RenderTarget &target, sf::RenderStates states) const;
@@ -41,6 +45,13 @@ private:
 	float dx1=0, dy1 = 0;
 	double speed = 0.2;
 	float rotation = 0;
+
+	bool deBug = false;
+	int nodeCounter = 0;
+	std::vector<Node> * nodeArray = new std::vector<Node>[1];
+	float dxDe = 0;
+	float dyDe = 0;
+	float walkRotation = 0;
 
 	bool enyDead = false;
 	bool enyTest = false;

@@ -45,32 +45,59 @@ void Enemy::update(const sf::Vector2f& PlayerPlace) {
 		//circ.setFillColor(sf::Color::Transparent);
 		this->enyDead = true;
 	}
-	if (blinded == false)
+	if (deBug == false)
 	{
-		if (direc == 0)
+		if (blinded == false)
 		{
-			circ.move(sf::Vector2f(this->speed, 0));
-			count++;
-			if (count >= 1000)
+			if (direc == 0)
 			{
-				direc = 1;
-				count = 0;
+				circ.move(sf::Vector2f(this->speed, 0));
+				count++;
+				if (count >= 1000)
+				{
+					direc = 1;
+					count = 0;
+				}
 			}
-		}
-		if (direc == 1)
-		{
-			circ.move(sf::Vector2f(-this->speed, 0));
-			count++;
-			if (count >= 1000)
+			if (direc == 1)
 			{
-				direc = 0;
-				count = 0;
+				circ.move(sf::Vector2f(-this->speed, 0));
+				count++;
+				if (count >= 1000)
+				{
+					direc = 0;
+					count = 0;
+				}
 			}
 		}
 	}
+	else
+	{
+		
+			dxDe = nodeArray[0][nodeCounter].rect.getPosition().x - circ.getPosition().x;
+			dyDe = nodeArray[0][nodeCounter].rect.getPosition().y - circ.getPosition().y;
+
+			this->walkRotation = (atan2(dyDe, dxDe)) * 180 / PI;
+			this->walkRotation -= 180;
+
+			float x = cos((walkRotation - 180) * PI / 180);
+			float y = sin((walkRotation - 180) * PI / 180);
+			circ.move(x * 0.1, y * 0.1);
+		
+	}
+	if (deBug == true)
+	{
+		
+		if (circ.getGlobalBounds().intersects(nodeArray[0][nodeCounter].rect.getGlobalBounds()))
+		{
+			nodeCounter += 1;
+		}
+		if (nodeCounter > 3)
+		{
+			nodeCounter = 0;
+		}
+	}
 	
-
-
 	/*if (blinded == true)
 	{
 		this->speed = 0;
@@ -112,12 +139,19 @@ void Enemy::enemyShoot(const sf::Vector2f& PlayerPlace)
 
 }
 
+void Enemy::nodeCatcher(std::vector<Node> *& nodeArray)
+{
+	this->deBug = true;
+	
+	this->nodeArray = nodeArray;
+	
+}
+
+
 bool Enemy::getDead() const
 {
 	return this->dead;
 }
-
-
 
 void Enemy::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
@@ -168,6 +202,11 @@ void Enemy::setEnyDead(bool bol)
 {
 	this->enyDead = bol;
 }
+
+//int Enemy::getNodeCounter() const
+//{
+//	return this->nodeCounter;
+//}
 
 
 

@@ -7,6 +7,7 @@
 #include "enemy.h"
 #include "flashBang.h"
 #include "glas.h"
+#include "node.h"
 #include <vector>
 class Game: public sf::Drawable
 {
@@ -34,6 +35,11 @@ private:
 	void colisionTest();
 	int k = 0;
 	bool first = true;
+
+	//Nodes
+	Node node;
+	std::vector<Node> * nodeArray = new std::vector<Node>[1];
+	void nodeMap();
 
 	//Walls
 	Wall wall;

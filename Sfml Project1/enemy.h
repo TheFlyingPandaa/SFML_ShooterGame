@@ -31,7 +31,7 @@ public:
 
 	/*int getNodeCounter() const;
 	void setNodeCounter(int node);*/
-	void nodeCatcher(std::vector<Node> *& nodeArray);
+	void nodeCatcher(std::vector<Node> *& nodeArray, int nodePointer);
 private:
 
 	void draw(sf::RenderTarget &target, sf::RenderStates states) const;
@@ -48,6 +48,7 @@ private:
 
 	bool deBug = false;
 	int nodeCounter = 0;
+	int nodePointer = 0;
 	std::vector<Node> * nodeArray = new std::vector<Node>[1];
 	float dxDe = 0;
 	float dyDe = 0;

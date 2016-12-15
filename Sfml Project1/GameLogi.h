@@ -8,6 +8,7 @@
 #include "flashBang.h"
 #include "glas.h"
 #include "node.h"
+#include "dorrs.h"
 #include <vector>
 class Game: public sf::Drawable
 {
@@ -38,8 +39,10 @@ private:
 
 	//Nodes
 	Node node;
-	std::vector<Node> * nodeArray = new std::vector<Node>[1];
+	std::vector<Node> * nodeArray;
 	void nodeMap();
+	int amountOfEnemyNodes = 0;
+	void enemyNodeCatcher();
 
 	//Walls
 	Wall wall;
@@ -47,6 +50,8 @@ private:
 	std::vector<Wall> wallArray;
 	void wallMap(int & wallAmount, Wall & wall, std::vector<Wall>& wallArray);
 
+	Doors door;
+	void doorMap();
 
 	Glas glas;
 	std::vector<Glas> glasArray;

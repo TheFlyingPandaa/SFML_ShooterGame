@@ -74,8 +74,8 @@ void Enemy::update(const sf::Vector2f& PlayerPlace) {
 	else
 	{
 		
-			dxDe = nodeArray[0][nodeCounter].rect.getPosition().x - circ.getPosition().x;
-			dyDe = nodeArray[0][nodeCounter].rect.getPosition().y - circ.getPosition().y;
+			dxDe = nodeArray[nodePointer][nodeCounter].rect.getPosition().x - circ.getPosition().x;
+			dyDe = nodeArray[nodePointer][nodeCounter].rect.getPosition().y - circ.getPosition().y;
 
 			this->walkRotation = (atan2(dyDe, dxDe)) * 180 / PI;
 			this->walkRotation -= 180;
@@ -88,7 +88,7 @@ void Enemy::update(const sf::Vector2f& PlayerPlace) {
 	if (deBug == true)
 	{
 		
-		if (circ.getGlobalBounds().intersects(nodeArray[0][nodeCounter].rect.getGlobalBounds()))
+		if (circ.getGlobalBounds().intersects(nodeArray[nodePointer][nodeCounter].rect.getGlobalBounds()))
 		{
 			nodeCounter += 1;
 		}
@@ -139,10 +139,10 @@ void Enemy::enemyShoot(const sf::Vector2f& PlayerPlace)
 
 }
 
-void Enemy::nodeCatcher(std::vector<Node> *& nodeArray)
+void Enemy::nodeCatcher(std::vector<Node> *& nodeArray, int nodePointer)
 {
 	this->deBug = true;
-	
+	this->nodePointer = nodePointer;
 	this->nodeArray = nodeArray;
 	
 }

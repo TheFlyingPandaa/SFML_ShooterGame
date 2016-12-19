@@ -3,7 +3,7 @@
 
 Game::Game()
 {
-	
+	loadingFont();
 	loadTextures();
 	wallMap(this->wallAmount, this->wall, this->wallArray);
 	enemyMap(this->enemyAmount, this->objEnemy, this->enemyArray);
@@ -12,6 +12,13 @@ Game::Game()
 	nodeMap();
 	enemyNodeCatcher();
 	doorMap();
+
+	rescueZone.rect.setSize(sf::Vector2f(100, 100));
+	rescueZone.rect.setFillColor(sf::Color(0, 255, 0, 120));
+	rescueZone.rect.setPosition(800, 700);
+
+
+
 }
 
 Game::~Game()
@@ -39,6 +46,8 @@ void Game::update(float dt, sf::RenderWindow &window)
 			{
 				mProjectile.rect.setPosition(mPlayer.circ.getPosition());
 				mProjectile.direction = mPlayer.rotation;
+				mProjectile.headShoot = false;
+				mProjectile.rect.setFillColor(sf::Color::Green);
 				for (size_t i = 0; i < this->enemyAmount; i++) {
 					if (mPlayer.curser.getGlobalBounds().intersects(enemyArray[i].circ.getGlobalBounds()))
 					{
@@ -90,6 +99,7 @@ void Game::update(float dt, sf::RenderWindow &window)
 		{
 			if (enemyArray[i].getDistanceToPlayer() < 150)
 			{
+				enemyArray[i].setPassiveNode(false);
 				if (enemyArray[i].getBlinded() == false)
 				{
 					if (enemyArray[i].getEnyTest() != true)
@@ -150,7 +160,28 @@ void Game::update(float dt, sf::RenderWindow &window)
 		}
 	}
 
+
+	if (mPlayer.circ.getGlobalBounds().intersects(hostage.circ.getGlobalBounds()))
+	{
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::T))
+		{
+			hostageTagAlong = true;
+		}
+	}
+	if (hostageTagAlong == true)
+	{
+		hostage.circ.setPosition(mPlayer.circ.getPosition().x - 10, mPlayer.circ.getPosition().y+10);
+		if (mPlayer.circ.getGlobalBounds().intersects(rescueZone.rect.getGlobalBounds()))
+		{
+			winningZone = true;
+		}
+	}
 	
+	sgetAmmo = std::to_string(mPlayer.getAmmo());
+	sgetAmmoCap = std::to_string(mPlayer.getAmmoCap());
+	text.setString(sgetAmmo + "/" + sgetAmmoCap);
+
+	doorChecker();
 	colisionTest();
 
 
@@ -202,6 +233,8 @@ void Game::colisionTest()
 		counter++;
 	}
 
+	//PROJECTILE ARRAY FOR THE ENEMY STARTS HERE
+
 	counter = 0;
 	for (enyProIter = enemyProjectileArr.begin(); enyProIter != enemyProjectileArr.end(); enyProIter++)
 	{
@@ -212,37 +245,26 @@ void Game::colisionTest()
 		}
 		counter++;
 	}
-
+	std::cout << enemyProjectileArr.size() << std::endl;
 	counter = 0;
 	for (enyProIter = enemyProjectileArr.begin(); enyProIter != enemyProjectileArr.end(); enyProIter++)
 	{
-		for (size_t i = 0; i < this->wallAmount; i++) {
-			if (enemyProjectileArr[counter].rect.getGlobalBounds().intersects(wallArray[i].rect.getGlobalBounds()));
+		
+		if (mPlayer.circ.getGlobalBounds().intersects(enemyProjectileArr[counter].rect.getGlobalBounds()))
 			{
-			//	enemyProjectileArr[counter].destory = true;
+				enemyProjectileArr[counter].destory = true;
+		
 			}
-		}
-		if (enemyProjectileArr[counter].rect.getPosition().x < 0)
-		{
-			enemyProjectileArr[counter].destory = true;
+		for (size_t i = 0; i < this->wallAmount; i++) {
+			if (enemyProjectileArr[counter].rect.getGlobalBounds().intersects(wallArray[i].rect.getGlobalBounds()))
+			{
+				enemyProjectileArr[counter].destory = true;
+			}
 		}
 		counter++;
 	}
 
-	if (mPlayer.circ.getGlobalBounds().intersects(door.circ.getGlobalBounds()))
-	{
-		door.doorSlide();
-		door.moving = true;
-	}
-	else
-	{
-		door.moving = false;
-	}
-
-	if (door.moved == true && door.moving == false)
-	{
-		door.doorSlideBack();
-	}
+	
 
 
 	if (flashbang.throws == true)
@@ -282,31 +304,41 @@ int Game::getEnyAmount() const
 
 void Game::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-	
-	target.draw(windowBGSprite);
-	target.draw(door);
-	for (size_t i = 0; i < this->glasAmount; i++)
+	if (winningZone == false)
 	{
-		target.draw(glasArray[i]);
-	}
-	target.draw(mPlayer);
-	
-	for (size_t i = 0; i < this->wallAmount; i++)
-	{
-		target.draw(wallArray[i].rect);
-	}
-	
-	for (size_t i = 0; i < this->enemyAmount; i++)
-	{
-		target.draw(enemyArray[i]);
-	}
-	for (size_t t = 0; t < this->amountOfEnemyNodes; t++) {
-		for (size_t i = 0; i < 4; i++)
+		target.draw(windowBGSprite);
+		target.draw(door);
+		for (size_t i = 0; i < this->glasAmount; i++)
 		{
-			target.draw(nodeArray[t][i]);
+			target.draw(glasArray[i]);
 		}
+		if (hostageTagAlong == true)
+		{
+			target.draw(rescueZone);
+		}
+		target.draw(mPlayer);
+
+		for (size_t i = 0; i < this->wallAmount; i++)
+		{
+			target.draw(wallArray[i].rect);
+		}
+
+		for (size_t i = 0; i < this->enemyAmount; i++)
+		{
+			target.draw(enemyArray[i]);
+		}
+		target.draw(hostage);
+		for (size_t t = 0; t < this->amountOfEnemyNodes; t++) {
+			for (size_t i = 0; i < 4; i++)
+			{
+				target.draw(nodeArray[t][i]);
+			}
+		}
+		target.draw(flashbang);
+		target.draw(text);
 	}
-	target.draw(flashbang);
+	
+	
 }
 
 
@@ -379,7 +411,23 @@ void Game::glasMap()
 	glas.rect.setPosition(50 * 5.5, 50 * 8.5);
 	glas.rect.setSize(sf::Vector2f(50 * 0.5, 50 * 1));
 	glasArray.push_back(glas);
-	glasAmount = 4;
+
+	glas.rect.setPosition(50 * 5.5, 50 * 10.5);
+	glas.rect.setSize(sf::Vector2f(50 * 0.5, 50 * 1));
+	glasArray.push_back(glas);
+
+	glas.rect.setPosition(50 * 5.5, 50 * 11.5);
+	glas.rect.setSize(sf::Vector2f(50 * 0.5, 50 * 1));
+	glasArray.push_back(glas);
+
+	glas.rect.setPosition(50 * 5.5, 50 * 12.5);
+	glas.rect.setSize(sf::Vector2f(50 * 0.5, 50 * 1));
+	glasArray.push_back(glas);
+
+	glas.rect.setPosition(50 * 5.5, 50 * 13.5);
+	glas.rect.setSize(sf::Vector2f(50 * 0.5, 50 * 1));
+	glasArray.push_back(glas);
+	glasAmount = 8;
 }
 
 void Game::nodeMap()
@@ -422,6 +470,36 @@ void Game::enemyNodeCatcher()
 void Game::doorMap()
 {
 	door.rect.setPosition(275, 225);
+}
+void Game::doorChecker()
+{
+	if (mPlayer.circ.getGlobalBounds().intersects(door.circ.getGlobalBounds()))
+	{
+		door.doorSlide();
+		door.moving = true;
+	}
+	else
+	{
+		door.moving = false;
+	}
+
+	if (door.moved == true && door.moving == false)
+	{
+		door.doorSlideBack();
+	}
+}
+
+void Game::loadingFont()
+{
+	if (!font.loadFromFile("Font//Hacked.ttf"))
+	{
+		std::cout << "CANT FIND FONT" << std::endl;
+	}
+
+	text.setFont(font);
+	text.setCharacterSize(32);
+	text.setFillColor(sf::Color::Black);
+	text.setPosition(50, 767);
 }
 
 

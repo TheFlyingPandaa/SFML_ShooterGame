@@ -30,11 +30,10 @@ void Enemy::update(const sf::Vector2f& PlayerPlace) {
 	//std::cout << this->rotation << std::endl;
 	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::U)) {
 
-	//	if (distanceToPlayer < 100)
-	//	{
-	//		//this->speed = 1;
-	//		//enemyShoot(PlayerPlace);
-	//	}
+		if (distanceToPlayer > 150)
+		{
+			passivNode = true;
+		}
 	//	else
 	//	{
 	//		this->speed = 0.2;
@@ -73,7 +72,8 @@ void Enemy::update(const sf::Vector2f& PlayerPlace) {
 	}
 	else
 	{
-		
+		if (passivNode == true)
+		{
 			dxDe = nodeArray[nodePointer][nodeCounter].rect.getPosition().x - circ.getPosition().x;
 			dyDe = nodeArray[nodePointer][nodeCounter].rect.getPosition().y - circ.getPosition().y;
 
@@ -83,7 +83,19 @@ void Enemy::update(const sf::Vector2f& PlayerPlace) {
 			float x = cos((walkRotation - 180) * PI / 180);
 			float y = sin((walkRotation - 180) * PI / 180);
 			circ.move(x * 0.1, y * 0.1);
-		
+		}
+		else
+		{
+			dxDe = PlayerPlace.x - circ.getPosition().x;
+			dyDe = PlayerPlace.y - circ.getPosition().y;
+
+			this->walkRotation = (atan2(dyDe, dxDe)) * 180 / PI;
+			this->walkRotation -= 180;
+
+			float x = cos((walkRotation - 180) * PI / 180);
+			float y = sin((walkRotation - 180) * PI / 180);
+			circ.move(x * 0.3, y * 0.3);
+		}
 	}
 	if (deBug == true)
 	{
@@ -208,5 +220,9 @@ void Enemy::setEnyDead(bool bol)
 //	return this->nodeCounter;
 //}
 
+void Enemy::setPassiveNode(bool bol)
+{
+	this->passivNode = bol;
+}
 
 

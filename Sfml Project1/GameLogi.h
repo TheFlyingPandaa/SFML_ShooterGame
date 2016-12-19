@@ -9,6 +9,7 @@
 #include "glas.h"
 #include "node.h"
 #include "dorrs.h"
+#include "hostage.h"
 #include <vector>
 class Game: public sf::Drawable
 {
@@ -37,6 +38,11 @@ private:
 	int k = 0;
 	bool first = true;
 
+	Node rescueZone;
+	Hostage hostage;
+	bool hostageTagAlong = false;
+	bool winningZone = false;
+
 	//Nodes
 	Node node;
 	std::vector<Node> * nodeArray;
@@ -52,6 +58,7 @@ private:
 
 	Doors door;
 	void doorMap();
+	void doorChecker();
 
 	Glas glas;
 	std::vector<Glas> glasArray;
@@ -72,6 +79,12 @@ private:
 	void loadTextures();
 	sf::Texture windowBackground;
 	sf::Sprite windowBGSprite;
+
+	sf::Font font;
+	sf::Text text;
+	void loadingFont();
+	std::string sgetAmmo;
+	std::string sgetAmmoCap;
 
 	Flashbang flashbang;
 	float flashLenght;

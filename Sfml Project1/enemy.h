@@ -29,6 +29,8 @@ public:
 	bool getEnyDead() const;
 	void setEnyDead(bool bol);
 
+	void setPassiveNode(bool bol);
+
 	/*int getNodeCounter() const;
 	void setNodeCounter(int node);*/
 	void nodeCatcher(std::vector<Node> *& nodeArray, int nodePointer);
@@ -40,13 +42,14 @@ private:
 	bool dead = false;
 
 	int hitPoints = 100;
-	float distanceToPlayer = 0;
+	float distanceToPlayer = 1510;
 	float dx=0, dy = 0;
 	float dx1=0, dy1 = 0;
 	double speed = 0.2;
 	float rotation = 0;
 
 	bool deBug = false;
+	bool passivNode = true;
 	int nodeCounter = 0;
 	int nodePointer = 0;
 	std::vector<Node> * nodeArray = new std::vector<Node>[1];

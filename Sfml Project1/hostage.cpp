@@ -16,6 +16,17 @@ Hostage::~Hostage()
 	
 }
 
+void Hostage::takeDamage(const int damage)
+{
+	this->hp = hp - damage;
+
+	if (hp <= 0)
+	{
+		circ.setFillColor(sf::Color(0,0,255,150));
+		dead = true;
+	}
+}
+
 
 void Hostage::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {

@@ -43,6 +43,7 @@ void Enemy::update(const sf::Vector2f& PlayerPlace) {
 	{
 		//circ.setFillColor(sf::Color::Transparent);
 		this->enyDead = true;
+		circ.setFillColor(sf::Color(255, 0, 0, 150));
 	}
 	if (deBug == false)
 	{

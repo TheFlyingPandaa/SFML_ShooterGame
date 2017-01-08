@@ -221,6 +221,11 @@ void Game::colisionTest()
 				}
 			}
 		}
+		if (projectileArray[counter].rect.getGlobalBounds().intersects(hostage.circ.getGlobalBounds()))
+		{
+			hostage.takeDamage(20);
+			projectileArray[counter].destory = true;
+		}
 		counter++;
 	}
 	counter = 0;
@@ -254,7 +259,7 @@ void Game::colisionTest()
 		if (mPlayer.circ.getGlobalBounds().intersects(enemyProjectileArr[counter].rect.getGlobalBounds()))
 			{
 				enemyProjectileArr[counter].destory = true;
-				mPlayer.damagePlayer(10);
+				mPlayer.damagePlayer(20);
 			}
 		for (size_t i = 0; i < this->wallAmount; i++) {
 			if (enemyProjectileArr[counter].rect.getGlobalBounds().intersects(wallArray[i].rect.getGlobalBounds()))

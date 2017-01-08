@@ -22,10 +22,16 @@ public:
 
 	int getAmmoCap() const;
 	int getAmmo() const;
+
+	int getHp() const;
+	void damagePlayer(const int damage);
+
 	void ammoTick();
 private:
 	int ammoCap = 30;
 	int ammo = 0;
+
+	int hp = 100;
 
 	void draw(sf::RenderTarget &target, sf::RenderStates states) const;
 	void reload();

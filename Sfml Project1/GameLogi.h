@@ -57,6 +57,7 @@ private:
 	void wallMap(int & wallAmount, Wall & wall, std::vector<Wall>& wallArray);
 
 	Doors door;
+	//int doorAmount;
 	void doorMap();
 	void doorChecker();
 
@@ -82,6 +83,7 @@ private:
 
 	sf::Font font;
 	sf::Text text;
+	sf::Text hpText;
 	void loadingFont();
 	std::string sgetAmmo;
 	std::string sgetAmmoCap;

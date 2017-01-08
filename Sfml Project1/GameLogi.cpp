@@ -17,13 +17,13 @@ Game::Game()
 	rescueZone.rect.setFillColor(sf::Color(0, 255, 0, 120));
 	rescueZone.rect.setPosition(800, 700);
 
-
+	mPlayer.circ.setPosition(sf::Vector2f(100, 600));
 
 }
 
 Game::~Game()
 {
-	//flashbang.rect.setPosition(mPlayer.circ.getPosition());
+	
 	delete[] nodeArray;
 }
  
@@ -180,6 +180,7 @@ void Game::update(float dt, sf::RenderWindow &window)
 	sgetAmmo = std::to_string(mPlayer.getAmmo());
 	sgetAmmoCap = std::to_string(mPlayer.getAmmoCap());
 	text.setString(sgetAmmo + "/" + sgetAmmoCap);
+	hpText.setString("HP:" + std::to_string(mPlayer.getHp()));
 
 	doorChecker();
 	colisionTest();
@@ -253,7 +254,7 @@ void Game::colisionTest()
 		if (mPlayer.circ.getGlobalBounds().intersects(enemyProjectileArr[counter].rect.getGlobalBounds()))
 			{
 				enemyProjectileArr[counter].destory = true;
-		
+				mPlayer.damagePlayer(10);
 			}
 		for (size_t i = 0; i < this->wallAmount; i++) {
 			if (enemyProjectileArr[counter].rect.getGlobalBounds().intersects(wallArray[i].rect.getGlobalBounds()))
@@ -301,7 +302,6 @@ int Game::getEnyAmount() const
 	return this->enemyAmount;
 }
 
-
 void Game::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
 	if (winningZone == false)
@@ -336,6 +336,7 @@ void Game::draw(sf::RenderTarget &target, sf::RenderStates states) const
 		}
 		target.draw(flashbang);
 		target.draw(text);
+		target.draw(hpText);
 	}
 	
 	
@@ -500,6 +501,11 @@ void Game::loadingFont()
 	text.setCharacterSize(32);
 	text.setFillColor(sf::Color::Black);
 	text.setPosition(50, 767);
+
+	hpText.setFont(font);
+	hpText.setCharacterSize(32);
+	hpText.setFillColor(sf::Color::Black);
+	hpText.setPosition(130, 767);
 }
 
 

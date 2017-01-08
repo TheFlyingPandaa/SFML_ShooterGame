@@ -107,6 +107,14 @@ void Player::update(sf::RenderWindow &window, std::vector<Wall>&mapArray, int wa
 	pointer.setPosition(circ.getPosition());
 	
 	rotateUpdate(window);
+
+	if (hp <= 0)
+	{
+		circ.setPosition(100, 600);
+		hp = 100;
+	}
+
+
 	for (size_t i = 0; i < wallAmount; i++) {
 		if (circ.getGlobalBounds().intersects(mapArray[i].rect.getGlobalBounds()))
 		{
@@ -206,4 +214,14 @@ void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	target.draw(pointer);
 	target.draw(circ);
 	target.draw(curser);
+}
+
+int Player::getHp() const
+{
+	return hp;
+}
+
+void Player::damagePlayer(const int damage)
+{
+	this->hp = hp - damage;
 }
